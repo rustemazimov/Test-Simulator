@@ -39,7 +39,7 @@
                <children>
                   <HBox alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="141.0" prefWidth="351.0" text="Drag File Here" textFill="#991258">
+                        <Button fx:id="dragFileHereButton" mnemonicParsing="false" prefHeight="141.0" prefWidth="351.0" text="Drag File Here" textFill="#991258">
                            <HBox.margin>
                               <Insets bottom="20.0" />
                            </HBox.margin>
@@ -51,14 +51,9 @@
                   </HBox>
                   <HBox alignment="CENTER">
                      <children>
-                        <Spinner>
+                        <Spinner fx:id="questionCountSpinner">
                            <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin>
-                        </Spinner>
-                        <Spinner>
-                           <HBox.margin>
-                              <Insets left="5.0" />
+                              <Insets />
                            </HBox.margin>
                         </Spinner>
                      </children>
@@ -69,19 +64,19 @@
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </HBox>
-                  <Spinner>
+                  <Spinner fx:id="variantCount">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </Spinner>
                   <HBox alignment="CENTER" prefHeight="49.0" prefWidth="403.0">
                      <children>
-                        <TextField alignment="CENTER" promptText="Username">
+                        <TextField fx:id="usernameTextField" alignment="CENTER" promptText="Username">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <PasswordField alignment="CENTER" promptText="Password">
+                        <PasswordField fx:id="passwordPasswordField" alignment="CENTER" promptText="Password">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
@@ -90,7 +85,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="46.0" prefWidth="403.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="165.0" text="Start exam">
+                        <Button fx:id="startExamButton" mnemonicParsing="false" prefHeight="51.0" prefWidth="165.0" text="Start exam">
                            <font>
                               <Font name="Comic Sans MS" size="24.0" />
                            </font>
