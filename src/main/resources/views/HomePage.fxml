@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="392.0" prefWidth="403.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomePageController">
    <children>
-      <BorderPane layoutX="71.0" layoutY="42.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane layoutX="71.0" layoutY="42.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: pink;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <MenuBar BorderPane.alignment="CENTER">
               <menus>
@@ -39,10 +39,13 @@
                <children>
                   <HBox alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="141.0" prefWidth="351.0" text="Drag File Here">
+                        <Button mnemonicParsing="false" prefHeight="141.0" prefWidth="351.0" text="Drag File Here" textFill="#991258">
                            <HBox.margin>
                               <Insets bottom="20.0" />
                            </HBox.margin>
+                           <font>
+                              <Font name="Bookman Old Style Italic" size="36.0" />
+                           </font>
                         </Button>
                      </children>
                   </HBox>
@@ -73,12 +76,12 @@
                   </Spinner>
                   <HBox alignment="CENTER" prefHeight="49.0" prefWidth="403.0">
                      <children>
-                        <TextField>
+                        <TextField alignment="CENTER" promptText="Username">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <PasswordField>
+                        <PasswordField alignment="CENTER" promptText="Password">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
@@ -87,7 +90,11 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="46.0" prefWidth="403.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="142.0" text="Button" />
+                        <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="165.0" text="Start exam">
+                           <font>
+                              <Font name="Comic Sans MS" size="24.0" />
+                           </font>
+                        </Button>
                      </children>
                   </HBox>
                </children>
