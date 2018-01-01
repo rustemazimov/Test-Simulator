@@ -35,11 +35,11 @@
             </MenuBar>
          </top>
          <center>
-            <VBox alignment="TOP_CENTER" prefHeight="352.0" prefWidth="403.0" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_CENTER" prefHeight="368.0" prefWidth="403.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER">
+                  <HBox alignment="CENTER" prefHeight="142.0" prefWidth="403.0">
                      <children>
-                        <Button fx:id="dragFileHereButton" mnemonicParsing="false" prefHeight="141.0" prefWidth="351.0" text="Drag File Here" textFill="#991258">
+                        <Button mnemonicParsing="false" onMouseDragEntered="#handleDragFileAction" prefHeight="141.0" prefWidth="351.0" text="Drag File Here" textFill="#991258">
                            <HBox.margin>
                               <Insets bottom="20.0" />
                            </HBox.margin>
@@ -47,6 +47,14 @@
                               <Font name="Bookman Old Style Italic" size="36.0" />
                            </font>
                         </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="54.0" prefWidth="403.0" visible="false">
+                     <children>
+                        <TextField fx:id="filePathLabel" prefHeight="25.0" prefWidth="289.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER">
@@ -64,7 +72,7 @@
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </HBox>
-                  <Spinner fx:id="variantCount">
+                  <Spinner fx:id="variantCountSpinner">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
@@ -76,7 +84,7 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <PasswordField fx:id="passwordPasswordField" alignment="CENTER" promptText="Password">
+                        <PasswordField fx:id="passwordField" alignment="CENTER" promptText="Password">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
@@ -85,19 +93,22 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="46.0" prefWidth="403.0">
                      <children>
-                        <Button fx:id="startExamButton" mnemonicParsing="false" prefHeight="51.0" prefWidth="165.0" text="Start exam">
+                        <Button mnemonicParsing="false" onAction="#handleStartExamAction" prefHeight="40.0" prefWidth="164.0" text="Start exam">
                            <font>
                               <Font name="Comic Sans MS" size="24.0" />
                            </font>
                         </Button>
                      </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
                   </HBox>
                </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <BorderPane.margin>
-                  <Insets top="20.0" />
+                  <Insets />
                </BorderPane.margin>
             </VBox>
          </center>
