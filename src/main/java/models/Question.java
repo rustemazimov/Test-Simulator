@@ -1,7 +1,9 @@
 package models;
 
 public class Question {
+    private int id;
     private String questionTxt;
+    private String[] answers = new String[Meta.getInstance().getVariantCount()];
     private char rightAnswerVariant;
 
     public String getQuestionTxt() {
@@ -18,5 +20,21 @@ public class Question {
 
     public void setRightAnswerVariant(char rightAnswerVariant) {
         this.rightAnswerVariant = rightAnswerVariant;
+    }
+
+    public String[] getAnswers() {
+        return answers;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setAnswers(String[] answers) {
+        this.answers = answers;
     }
 }

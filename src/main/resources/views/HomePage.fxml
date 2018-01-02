@@ -39,7 +39,7 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="142.0" prefWidth="403.0">
                      <children>
-                        <Button mnemonicParsing="false" onMouseDragEntered="#handleDragFileAction" prefHeight="141.0" prefWidth="351.0" text="Drag File Here" textFill="#991258">
+                        <Button mnemonicParsing="false" onAction="#handleShowExplorerAction" onDragEntered="#handleDragFileAction" prefHeight="141.0" prefWidth="351.0" text="Drag File Here" textFill="#991258">
                            <HBox.margin>
                               <Insets bottom="20.0" />
                            </HBox.margin>
@@ -54,7 +54,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="54.0" prefWidth="403.0" visible="false">
                      <children>
-                        <TextField fx:id="filePathLabel" prefHeight="25.0" prefWidth="289.0" />
+                        <TextField fx:id="filePathLabel" alignment="CENTER" prefHeight="25.0" prefWidth="289.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER">

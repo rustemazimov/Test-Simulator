@@ -1,5 +1,7 @@
 package models;
 
+import javafx.stage.Stage;
+
 public class Meta {
     private static Meta instance;
 
@@ -8,7 +10,12 @@ public class Meta {
     private int variantCount;
     private String username;
     private String password;
-
+    private String fileName;
+    private int rightAnswerCount;
+    private int wrongAnswerCount;
+    private int unansweredAnswerCount = chosenQuestionCount;
+    private char[] variantLetters;
+    private String[] hashMethods;
     private Meta() {}
 
     public static Meta getInstance() {
@@ -57,6 +64,62 @@ public class Meta {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public int getRightAnswerCount() {
+        return rightAnswerCount;
+    }
+
+    public void setRightAnswerCount(int rightAnswerCount) {
+        this.rightAnswerCount = rightAnswerCount;
+    }
+
+    public int getWrongAnswerCount() {
+        return wrongAnswerCount;
+    }
+
+    public void setWrongAnswerCount(int wrongAnswerCount) {
+        this.wrongAnswerCount = wrongAnswerCount;
+    }
+
+    public int getUnansweredAnswerCount() {
+        return unansweredAnswerCount;
+    }
+
+    public void setUnansweredAnswerCount(int unansweredAnswerCount) {
+        this.unansweredAnswerCount = unansweredAnswerCount;
+    }
+
+    public char[] getVariantLetters() {
+        if (variantLetters == null)
+        {
+            variantLetters = new char[variantCount];
+            char c = 'A';
+            for (int i = 0; i < variantLetters.length; i++) {
+                variantLetters[i] = c;
+                if (c == 'Z')
+                {
+                    c = 'A';
+                }
+            }
+        }
+        return variantLetters;
+    }
+
+    public String[] getHashMethods() {
+        return hashMethods;
+    }
+
+    public void setHashMethods(String[] hashMethods) {
+        this.hashMethods = hashMethods;
     }
 }
 
