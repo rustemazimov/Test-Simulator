@@ -23,7 +23,6 @@ public class App extends Application{
         AnchorPane root = (AnchorPane) loader.load();
         Controller controller = loader.getController();
         controller.setStage(primaryStage);
-        loader.setController(controller);
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Test Simulator");
         primaryStage.show();

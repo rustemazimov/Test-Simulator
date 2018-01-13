@@ -52,24 +52,24 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="54.0" prefWidth="403.0" visible="false">
-                     <children>
-                        <TextField fx:id="filePathLabel" alignment="CENTER" prefHeight="25.0" prefWidth="289.0" />
-                     </children>
-                  </HBox>
                   <HBox alignment="CENTER">
                      <children>
-                        <Spinner fx:id="questionCountSpinner">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Spinner>
+                        <TextField fx:id="filePathLabel" prefHeight="25.0" prefWidth="303.0" visible="false" />
                      </children>
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                      <VBox.margin>
                         <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Spinner fx:id="questionCountSpinner" />
+
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
                      </VBox.margin>
                   </HBox>
                   <Spinner fx:id="variantCountSpinner">
@@ -84,7 +84,7 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <PasswordField fx:id="passwordField" alignment="CENTER" promptText="Password">
+                        <PasswordField fx:id="passwordField" alignment="CENTER" onKeyPressed="#handleKeyPressedAction" promptText="Password">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
@@ -93,7 +93,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="46.0" prefWidth="403.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#handleStartExamAction" prefHeight="40.0" prefWidth="164.0" text="Start exam">
+                        <Button mnemonicParsing="false" onAction="#handleStartExamAction" onKeyPressed="#handleKeyPressedAction" prefHeight="40.0" prefWidth="164.0" text="Start exam">
                            <font>
                               <Font name="Comic Sans MS" size="24.0" />
                            </font>

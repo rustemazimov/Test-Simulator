@@ -8,19 +8,33 @@ import java.io.IOException;
 
 public class QuestionReader {
     public void readQuestions() throws IOException {
-        String text = new StringReader().readString();
-        Question question;
-        char[] variantLetters = Meta.getInstance().getVariantLetters();
-        for (int i = 0; i < text.length(); i++) {
-            question = new Question();
-            int questionBeginningIndex = text.indexOf((i + 1) + ")");
-            text = text.substring(questionBeginningIndex);
-            int firstVariantLetterIndex = text.indexOf(variantLetters[0] + ")");
-            question.setQuestionTxt(text.substring(questionBeginningIndex, firstVariantLetterIndex));
-            for (int j = 1; j < variantLetters.length; j++) {
-                question.getAnswers()[j - 1] = text.substring(firstVariantLetterIndex, variantLetters[j]);
+        String txt = new StringReader().readString();
+        for (int i = 0, j = 1; i < txt.length(); i++, j++) {
+            int
+                beginIndex = txt.indexOf(j + ")"),
+                endIndex = txt.indexOf(j + 1 + ")");
+            if (beginIndex == -1)
+            {
+                break;
             }
-            QuestionBank.getInstance().add(question);
+            if (endIndex == -1)
+            {
+                loadQuestion(txt.substring(beginIndex, txt.length()));
+                continue;
+            }
+            loadQuestion(txt.substring(beginIndex, endIndex));
         }
+    }
+
+    private void loadQuestion(String txt) {
+        Question question = new Question();
+        char[] variantLetters = Meta.getInstance().getVariantLetters();
+        question.setQuestionTxt(txt.substring(0, txt.indexOf(variantLetters[0])));
+        String[] answers = question.getAnswers();
+        for (int i = 0; i < answers.length - 1; i++) {
+            answers[i] = txt.substring(txt.indexOf(variantLetters[i]), txt.indexOf(variantLetters[i + 1]));
+        }
+        answers[answers.length - 1] = txt.substring(txt.indexOf(variantLetters[variantLetters.length - 1]), txt.length());
+        QuestionBank.getInstance().add(question);
     }
 }

@@ -27,4 +27,6 @@ public class QuestionBank {
     public int indexOf(Question question) {
         return this.list.indexOf(question);
     }
+
+    public int size() { return this.list.size(); }
 }

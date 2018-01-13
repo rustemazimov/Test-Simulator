@@ -6,14 +6,14 @@ public class Meta {
     private static Meta instance;
 
     private int allQuestionCount;
-    private int chosenQuestionCount;
+    private int questionCount;
     private int variantCount;
     private String username;
     private String password;
     private String fileName;
     private int rightAnswerCount;
     private int wrongAnswerCount;
-    private int unansweredAnswerCount = chosenQuestionCount;
+    private int unansweredAnswerCount = questionCount;
     private char[] variantLetters;
     private String[] hashMethods;
     private Meta() {}
@@ -34,12 +34,12 @@ public class Meta {
         this.allQuestionCount = allQuestionCount;
     }
 
-    public int getChosenQuestionCount() {
-        return chosenQuestionCount;
+    public int getQuestionCountt() {
+        return questionCount;
     }
 
-    public void setChosenQuestionCount(int chosenQuestionCount) {
-        this.chosenQuestionCount = chosenQuestionCount;
+    public void setQuestionCount(int questionCount) {
+        this.questionCount = questionCount;
     }
 
     public int getVariantCount() {
@@ -102,13 +102,9 @@ public class Meta {
         if (variantLetters == null)
         {
             variantLetters = new char[variantCount];
-            char c = 'A';
+            char variantTemp = 'A';
             for (int i = 0; i < variantLetters.length; i++) {
-                variantLetters[i] = c;
-                if (c == 'Z')
-                {
-                    c = 'A';
-                }
+                variantLetters[i] = (char) variantTemp++;
             }
         }
         return variantLetters;

@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <AnchorPane prefHeight="484.0" prefWidth="638.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ExamPageController">
    <children>
       <BorderPane layoutX="128.0" layoutY="93.0" prefHeight="484.0" prefWidth="638.0" style="-fx-background-color: pink;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -46,7 +45,7 @@
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#handleEvaluateAction" prefHeight="32.0" prefWidth="68.0" text="Evaluate">
+                              <Button fx:id="evaluateButton" mnemonicParsing="false" onAction="#handleEvaluateAction" prefHeight="32.0" prefWidth="68.0" text="Evaluate">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
@@ -99,9 +98,9 @@
                         </TextArea>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="137.0" prefWidth="466.0">
+                  <HBox alignment="CENTER" prefHeight="160.0" prefWidth="466.0">
                      <children>
-                        <ListView fx:id="answerListView" onMouseClicked="#handleAnswerGivenAction" prefHeight="137.0" prefWidth="271.0" />
+                        <VBox fx:id="answersVBox" alignment="CENTER" prefHeight="167.0" prefWidth="326.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="73.0" prefWidth="466.0">

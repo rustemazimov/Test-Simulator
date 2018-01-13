@@ -15,7 +15,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
     /**
-     * Generationg hash values of given values with a given value
+     * Generates hash values of given values with a given value
      *
      */
     public class Function {
@@ -51,7 +51,7 @@ import javax.crypto.spec.PBEKeySpec;
         }
 
 
-        /*Create a method for hasing with MD5*/
+        /*Create a method for hashing with MD5*/
         private String convertToMD5(String text){
             try {
                 MessageDigest md = MessageDigest.getInstance("MD5");

@@ -13,9 +13,9 @@ public class ResultPageController extends Controller{
         Meta metaData = Meta.getInstance();
 
         usernameLabel.setText(metaData.getUsername());
-        rightAnswerCountLabel.setText(metaData.getRightAnswerCount() + "");
-        wrongAnswerCountLabel.setText(metaData.getWrongAnswerCount() + "");
-        unansweredAnswerCountLabel.setText(metaData.getUnansweredAnswerCount() + "");
+        rightAnswerCountLabel.setText(metaData.getRightAnswerCount() + " right");
+        wrongAnswerCountLabel.setText(metaData.getWrongAnswerCount() + " wrong");
+        unansweredAnswerCountLabel.setText(metaData.getUnansweredAnswerCount() + " unanswered");
 
     }
 }

@@ -1,13 +1,21 @@
 package controllers;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import models.AnswerBank;
 import models.Meta;
 import models.Question;
 import models.QuestionBank;
@@ -17,16 +25,15 @@ import java.util.Optional;
 
 public class ExamPageController extends Controller{
 
-    public static final ObservableList answers = FXCollections.observableArrayList();
-
     private int questionId;
-    private ToggleGroup group = new ToggleGroup();
+
+    private RadioButton[] answerRadioButtons;
+
+    @FXML private VBox answersVBox;
 
     @FXML private ListView<String> questionListView;
 
     @FXML private TextArea questionTextArea;
-
-    @FXML private ListView<RadioListCell> answerListView;
 
     @FXML private Button startButton;
 
@@ -36,10 +43,27 @@ public class ExamPageController extends Controller{
 
     @FXML private Button nextButton;
 
+    @FXML private Button evaluateButton;
+
 
     @FXML private void initialize() {
         prepareQuestionListView();
         loadQuestionListView();
+        prepareAnswersVBox();
+        pauseContinueButton.setDisable(true);
+        evaluateButton.setDisable(true);
+        previousButton.setDisable(true);
+        nextButton.setDisable(true);
+    }
+
+    private void prepareQuestionListView() {
+        questionListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                loadQuestion(questionListView.getSelectionModel().getSelectedIndex());
+            }
+        });
+        questionListView.setDisable(true);
     }
 
     private void loadQuestion(int index) {
@@ -51,7 +75,7 @@ public class ExamPageController extends Controller{
         {
             previousButton.setVisible(true);
         }
-        if (index == Meta.getInstance().getChosenQuestionCount() - 1)
+        if (index == Meta.getInstance().getQuestionCountt() - 1)
         {
             nextButton.setVisible(false);
         }
@@ -61,21 +85,32 @@ public class ExamPageController extends Controller{
         }
 
         questionId = index;
-        Question question = QuestionBank.getInstance().get(index);
+        Question question = QuestionBank.getInstance().get(questionId);
 
         questionTextArea.setText(question.getQuestionTxt());
 
-        answers.clear();
-        answers.addAll(question.getAnswers());
+        String[] answers = question.getAnswers();
+        for (int i = 0; i < answerRadioButtons.length; i++) {
+            answerRadioButtons[i].setText(answers[i]);
+        }
     }
 
     private void loadQuestionListView() {
-
+        QuestionBank questionBank = QuestionBank.getInstance();
+        for (int i = 0; i < questionBank.size(); i++) {
+            questionListView.getItems().add(questionBank.get(i).getId() + "");
+        }
     }
 
     @FXML private void handleStartAction() {
-        startButton.setVisible(false);
+        startButton.setDisable(true);
         loadQuestion(0);
+        pauseContinueButton.setDisable(false);
+        questionListView.setDisable(false);
+        answersVBox.setDisable(false);
+        previousButton.setDisable(false);
+        nextButton.setDisable(false);
+        evaluateButton.setDisable(false);
     }
 
     @FXML private void handlePauseContinueAction() {
@@ -102,8 +137,8 @@ public class ExamPageController extends Controller{
                     + (unansweredAnswerCount > 1  ? "s were" : "was")
                     + "found!");
             alertDialog.setContentText("Do you want to continue?");
+            alertDialog.show();
             Optional<ButtonType> result = alertDialog.showAndWait();
-
             if (result.get() != ButtonType.OK){
                 return;
             }
@@ -124,56 +159,46 @@ public class ExamPageController extends Controller{
         }
     }
 
-    @FXML private void handlePreviousAction() {
-        loadQuestion(questionId - 1);
-    }
+    @FXML private void handlePreviousAction() { loadQuestion(questionId - 1); }
 
     @FXML private void handleNextAction() {
         loadQuestion(questionId + 1);
     }
 
-    @FXML private void handleAnswerGivenAction() {
 
-    }
+    private void prepareAnswersVBox() {
+        answersVBox.setDisable(true);
+        ObservableList<Node> answers = answersVBox.getChildren();
+        answerRadioButtons = new RadioButton[Meta.getInstance().getVariantCount()];
+        for (int i = 0; i < answerRadioButtons.length; i++) {
+            answerRadioButtons[i] = new RadioButton();
+            RadioButton answerRadioButton = answerRadioButtons[i];
+            answerRadioButton.setPrefSize(answersVBox.getPrefWidth(), answersVBox.getPrefHeight() / answerRadioButtons.length);
+            answers.add(answerRadioButton);
+            RadioButton finalAnswerRadioButton = answerRadioButton;
+            int finalI = i;
+            answerRadioButton.setOnAction(event -> {
+                if (finalAnswerRadioButton.isSelected())
+                {
+                    for (int j = 0; j < answerRadioButtons.length; j++) {
+                        if (finalI != j)
+                        {
+                            answerRadioButtons[j].setSelected(false);
+                        }
+                    }
+                    AnswerBank.getInstance().set(finalI, finalAnswerRadioButton.getText().charAt(0), false);
+                }
+            });
+        }
 
-    private void prepareQuestionListView() {
-        //answerListView.setPrefSize(200, 250);
-        answerListView.setEditable(true);
 
-        answers.addAll(
-                "Adam", "Alex", "Alfred", "Albert",
-                "Brenda", "Connie", "Derek", "Donny",
-                "Lynne", "Myrtle", "Rose", "Rudolph",
-                "Tony", "Trudy", "Williams", "Zach"
-        );
 
-        answerListView.setItems(answers);
-        answerListView.setCellFactory(new Callback<ListView<RadioListCell>, ListCell<RadioListCell>>() {
-            public ListCell<RadioListCell> call(ListView<RadioListCell> param) {
-                return null;
-            }
-        });
 
     }
     private void setAnswerable(boolean flag) {
-        answerListView.setVisible(flag);
-        previousButton.setVisible(flag);
-        nextButton.setVisible(flag);
-    }
-
-    private class RadioListCell extends ListCell<String> {
-        @Override
-        public void updateItem(String obj, boolean empty) {
-            super.updateItem(obj, empty);
-            if (empty) {
-                setText(null);
-                setGraphic(null);
-            } else {
-                RadioButton radioButton = new RadioButton(obj);
-                radioButton.setToggleGroup(group);
-                // Add Listeners if any
-                setGraphic(radioButton);
-            }
-        }
+        answersVBox.setDisable(!flag);
+        previousButton.setDisable(!flag);
+        nextButton.setDisable(!flag);
+        questionListView.setDisable(!flag);
     }
 }
