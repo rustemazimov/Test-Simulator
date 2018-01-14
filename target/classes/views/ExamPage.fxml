@@ -45,7 +45,7 @@
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#handleEvaluateAction" prefHeight="32.0" prefWidth="68.0" text="Evaluate">
+                              <Button fx:id="evaluateButton" mnemonicParsing="false" onAction="#handleEvaluateAction" prefHeight="32.0" prefWidth="68.0" text="Evaluate">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>

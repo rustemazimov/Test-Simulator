@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.Meta;
+import models.Utils;
 import models.questionIO.QuestionReader;
 
 import java.io.File;
@@ -96,12 +97,23 @@ public class HomePageController extends Controller{
         String fileName = this.filePathLabel.getText();
         if (fileName.isEmpty())
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information");
-            alert.setHeaderText("File wasn't selected");
-            alert.setContentText("A text, word or pdf file should be selected for taking questions from it.");
-            alert.showAndWait();
+            Utils.showAlertDialog(
+                                "Information",
+                        "File wasn't selected",
+                    "A text, word or pdf file should be selected for taking questions from it.");
             return;
+        }
+        String
+                username = usernameTextField.getText(),
+                password = passwordField.getText();
+        boolean
+                isUsernameEmpty = username.isEmpty();
+        if (isUsernameEmpty || password.isEmpty())
+        {
+            Utils.showAlertDialog(
+                    "Information",
+                    String.format("%s shouldn't be empty", isUsernameEmpty ? "Username" : "Password"),
+                        "Username and Password should be specified in order to ...");
         }
         metaData.setFileName(fileName);
         metaData.setQuestionCount(questionCountSpinner.getValue());
@@ -138,4 +150,5 @@ public class HomePageController extends Controller{
             handleStartExamAction();
         }*/
     }
+
 }

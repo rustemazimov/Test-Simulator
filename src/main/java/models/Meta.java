@@ -5,7 +5,6 @@ import javafx.stage.Stage;
 public class Meta {
     private static Meta instance;
 
-    private int allQuestionCount;
     private int questionCount;
     private int variantCount;
     private String username;
@@ -26,15 +25,7 @@ public class Meta {
         return instance;
     }
 
-    public int getAllQuestionCount() {
-        return allQuestionCount;
-    }
-
-    public void setAllQuestionCount(int allQuestionCount) {
-        this.allQuestionCount = allQuestionCount;
-    }
-
-    public int getQuestionCountt() {
+    public int getQuestionCount() {
         return questionCount;
     }
 

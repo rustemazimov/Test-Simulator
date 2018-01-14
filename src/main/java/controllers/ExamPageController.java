@@ -75,7 +75,7 @@ public class ExamPageController extends Controller{
         {
             previousButton.setVisible(true);
         }
-        if (index == Meta.getInstance().getQuestionCountt() - 1)
+        if (index == Meta.getInstance().getQuestionCount() - 1)
         {
             nextButton.setVisible(false);
         }
@@ -186,7 +186,7 @@ public class ExamPageController extends Controller{
                             answerRadioButtons[j].setSelected(false);
                         }
                     }
-                    AnswerBank.getInstance().set(finalI, finalAnswerRadioButton.getText().charAt(0), false);
+                    AnswerBank.getInstance().set(questionId, finalAnswerRadioButton.getText().charAt(0), false);
                 }
             });
         }

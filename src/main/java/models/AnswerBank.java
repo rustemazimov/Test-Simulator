@@ -3,13 +3,13 @@ package models;
 public class AnswerBank {
 	private static AnswerBank instance;
 
-	private char[] rightAnswers, wrongAnswers;
+	private char[] userAnswers, realAnswers;
 
 	private AnswerBank() {
-		int variantCount = Meta.getInstance().getVariantCount();
+		int questionCount = Meta.getInstance().getQuestionCount();
 
-		rightAnswers = new char[variantCount];
-		wrongAnswers = new char[variantCount];
+		userAnswers = new char[questionCount];
+		realAnswers = new char[questionCount];
 	}
 
 	public static AnswerBank getInstance() {
@@ -23,11 +23,22 @@ public class AnswerBank {
 	public void set(int index, char variant, boolean isRight) {
 		if (isRight)
 		{
-			rightAnswers[index] = variant;
+			userAnswers[index] = variant;
 		}
 		else
 		{
-			wrongAnswers[index] = variant;
+			realAnswers[index] = variant;
+		}
+	}
+
+	public char get(int index, boolean isRight) {
+		if (isRight)
+		{
+			return userAnswers[index];
+		}
+		else
+		{
+			return realAnswers[index];
 		}
 	}
 }

@@ -2,7 +2,9 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import models.AnswerBank;
 import models.Meta;
+import models.QuestionBank;
 
 public class ResultPageController extends Controller{
 
@@ -17,5 +19,13 @@ public class ResultPageController extends Controller{
         wrongAnswerCountLabel.setText(metaData.getWrongAnswerCount() + " wrong");
         unansweredAnswerCountLabel.setText(metaData.getUnansweredAnswerCount() + " unanswered");
 
+    }
+
+    private void evaluate() {
+        AnswerBank answerBank = AnswerBank.getInstance();
+
+        for (int i = 0; i < Meta.getInstance().getQuestionCount(); i++) {
+//            char rightVariant
+        }
     }
 }
