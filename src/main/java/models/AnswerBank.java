@@ -24,8 +24,8 @@ public class AnswerBank {
 		return instance;
 	}
 
-	public void set(int index, char variant, boolean isRight) {
-		if (isRight)
+	public void set(int index, char variant, boolean isUser) {
+		if (isUser)
 		{
 			userAnswers[index] = variant;
 		}
@@ -35,8 +35,8 @@ public class AnswerBank {
 		}
 	}
 
-	public char get(int index, boolean isRight) {
-		if (isRight)
+	public char get(int index, boolean isUser) {
+		if (isUser)
 		{
 			return userAnswers[index];
 		}
