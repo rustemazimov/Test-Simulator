@@ -112,8 +112,19 @@ public class HomePageController extends Controller{
         {
             Utils.showAlertDialog(
                     "Information",
-                    String.format("%s shouldn't be empty", isUsernameEmpty ? "Username" : "Password"),
-                        "Username and Password should be specified in order to ...");
+                    String.format("%s mustn't be empty", isUsernameEmpty ? "Username" : "Password"),
+                        "Username and Password must be specified in order to ...");
+            return;
+        }
+        if (!Utils.PasswordStrenghtChecker.isPasswordStrong(password))
+        {
+            Utils.showAlertDialog(
+                    "Information",
+                    "Password isn't strong",
+                    "Password must have at least one <digit>, <upper-case letter>, <lower-case letter>"
+                            + "and must be at least in the length of <10>"
+            );
+            return;
         }
         metaData.setFileName(fileName);
         metaData.setQuestionCount(questionCountSpinner.getValue());
