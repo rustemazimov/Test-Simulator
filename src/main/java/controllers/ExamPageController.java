@@ -184,8 +184,15 @@ public class ExamPageController extends Controller{
             RadioButton finalAnswerRadioButton = answerRadioButton;
             int finalI = i;
             answerRadioButton.setOnAction(event -> {
+                ObservableList<String> questionListViewItems = questionListView.getItems();
+                String olderQuestionItem = questionListViewItems.get(questionId);
+                boolean isLastCharPlusOfQuestionOnListView = olderQuestionItem.charAt(olderQuestionItem.length() - 1) == '\u2705';
                 if (finalAnswerRadioButton.isSelected())
                 {
+                    if (!isLastCharPlusOfQuestionOnListView)
+                    {
+                        questionListViewItems.set(questionId, questionListViewItems.get(questionId) + " " + '\u2705');
+                    }
                     for (int j = 0; j < answerRadioButtons.length; j++) {
                         if (finalI != j)
                         {
@@ -193,6 +200,13 @@ public class ExamPageController extends Controller{
                         }
                     }
                     AnswerBank.getInstance().set(questionId, finalAnswerRadioButton.getText().charAt(0), false);
+                }
+                else
+                {
+                    if (isLastCharPlusOfQuestionOnListView)
+                    {
+                        questionListViewItems.set(questionId, olderQuestionItem.substring(0, olderQuestionItem.indexOf('\u2705') - 1));
+                    }
                 }
             });
         }
