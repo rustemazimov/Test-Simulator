@@ -1,5 +1,7 @@
 package models;
 
+import java.util.HashMap;
+
 public class AnswerBank {
 	private static AnswerBank instance;
 
@@ -10,6 +12,8 @@ public class AnswerBank {
 
 		userAnswers = new char[questionCount];
 		realAnswers = new char[questionCount];
+
+
 	}
 
 	public static AnswerBank getInstance() {
@@ -40,5 +44,9 @@ public class AnswerBank {
 		{
 			return realAnswers[index];
 		}
+	}
+
+	public void remove(int index) {
+		userAnswers[index] = '\u0000';
 	}
 }

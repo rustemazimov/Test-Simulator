@@ -127,7 +127,13 @@ public class ExamPageController extends Controller{
         questionListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                loadQuestion(questionListView.getSelectionModel().getSelectedIndex());
+                int selectedIndex = questionListView.getSelectionModel().getSelectedIndex();
+                if (selectedIndex == questionId)
+                {
+                    return;
+                }
+                resetAnswerRadioButtons();
+                loadQuestion(selectedIndex);
             }
         });
         questionListView.setDisable(true);
@@ -156,6 +162,12 @@ public class ExamPageController extends Controller{
 
         questionTextArea.setText(question.getQuestionTxt());
 
+        char userAnswerForQuestion = AnswerBank.getInstance()
+                .get(questionId, true);
+        if (userAnswerForQuestion != '\u0000')
+        {
+            answerRadioButtons[Meta.getInstance().getIndexForVariant(userAnswerForQuestion)].setSelected(true);
+        }
         String[] answers = question.getAnswers();
         for (int i = 0; i < answerRadioButtons.length; i++) {
             answerRadioButtons[i].setText(answers[i]);
@@ -199,10 +211,15 @@ public class ExamPageController extends Controller{
                             answerRadioButtons[j].setSelected(false);
                         }
                     }
-                    AnswerBank.getInstance().set(questionId, finalAnswerRadioButton.getText().charAt(0), false);
+                    String radioButtonText = finalAnswerRadioButton.getText();
+                    if (radioButtonText.length() >= 1)
+                    {
+                        AnswerBank.getInstance().set(questionId, radioButtonText.charAt(0), true);
+                    }
                 }
                 else
                 {
+                    AnswerBank.getInstance().remove(questionId);
                     if (isLastCharPlusOfQuestionOnListView)
                     {
                         questionListViewItems.set(questionId, olderQuestionItem.substring(0, olderQuestionItem.indexOf('\u2705') - 1));

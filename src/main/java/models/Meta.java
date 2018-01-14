@@ -2,6 +2,8 @@ package models;
 
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+
 public class Meta {
     private static Meta instance;
 
@@ -15,7 +17,10 @@ public class Meta {
     private int unansweredAnswerCount = questionCount;
     private char[] variantLetters;
     private String[] hashMethods;
-    private Meta() {}
+
+    private HashMap<Character, Byte> answerIndexMap;
+
+    private Meta() { }
 
     public static Meta getInstance() {
         if (instance == null)
@@ -25,6 +30,22 @@ public class Meta {
         return instance;
     }
 
+    public void prepareAnswerIndexMap() {
+
+    }
+
+    public byte getIndexForVariant(char c) {
+        System.out.println("Variant count: " + variantCount);
+        System.out.println("Variant letters: " + variantLetters[0]);
+        if (answerIndexMap == null)
+        {
+            answerIndexMap = new HashMap<>(variantCount);
+            for (byte i = 0; i < variantLetters.length; i++) {
+                answerIndexMap.put(variantLetters[i], i);
+            }
+        }
+        return answerIndexMap.get(c);
+    }
     public int getQuestionCount() {
         return questionCount;
     }
