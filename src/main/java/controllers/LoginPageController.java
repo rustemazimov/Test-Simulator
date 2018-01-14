@@ -1,13 +1,16 @@
 package controllers;
 
+import com.sun.scenario.animation.shared.TimerReceiver;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import models.Meta;
+import models.Utils;
 
 import java.io.IOException;
+import java.util.TimerTask;
 
 public class LoginPageController extends Controller{
 
@@ -35,6 +38,14 @@ public class LoginPageController extends Controller{
             } catch (IOException e) {
 
             }
+        }
+        else
+        {
+            Utils.showAlertDialog(
+                    "Information",
+                    "Wrong!",
+                    "Username or Password or both aren't correct"
+            );
         }
     }
 

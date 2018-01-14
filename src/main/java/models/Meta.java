@@ -129,5 +129,20 @@ public class Meta {
     public void setHashMethods(String[] hashMethods) {
         this.hashMethods = hashMethods;
     }
+
+    public void incrementAnswerCount(boolean isRight) {
+        if (isRight)
+        {
+            rightAnswerCount++;
+        }
+        else
+        {
+            wrongAnswerCount++;
+        }
+    }
+
+    public void decrementUnansweredCount() {
+        unansweredAnswerCount--;
+    }
 }
 
