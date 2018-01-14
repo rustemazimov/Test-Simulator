@@ -7,6 +7,7 @@ import models.QuestionBank;
 import java.io.IOException;
 
 public class QuestionReader {
+    private int questonId = 1;
     public void readQuestions() throws IOException {
         String txt = new StringReader().readString();
         for (int i = 0, j = 1; i < txt.length(); i++, j++) {
@@ -28,6 +29,7 @@ public class QuestionReader {
 
     private void loadQuestion(String txt) {
         Question question = new Question();
+        question.setId(this.questonId++);
         char[] variantLetters = Meta.getInstance().getVariantLetters();
         question.setQuestionTxt(txt.substring(0, txt.indexOf(variantLetters[0])));
         String[] answers = question.getAnswers();

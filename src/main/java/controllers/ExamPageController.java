@@ -165,7 +165,7 @@ public class ExamPageController extends Controller{
     private void loadQuestionListView() {
         QuestionBank questionBank = QuestionBank.getInstance();
         for (int i = 0; i < questionBank.size(); i++) {
-            questionListView.getItems().add(questionBank.get(i).getId() + "");
+            questionListView.getItems().add("Question - " + questionBank.get(i).getId());
         }
     }
 
