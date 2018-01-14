@@ -56,52 +56,6 @@ public class ExamPageController extends Controller{
         nextButton.setDisable(true);
     }
 
-    private void prepareQuestionListView() {
-        questionListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                loadQuestion(questionListView.getSelectionModel().getSelectedIndex());
-            }
-        });
-        questionListView.setDisable(true);
-    }
-
-    private void loadQuestion(int index) {
-        if (index == 0)
-        {
-            previousButton.setVisible(false);
-        }
-        else
-        {
-            previousButton.setVisible(true);
-        }
-        if (index == Meta.getInstance().getQuestionCount() - 1)
-        {
-            nextButton.setVisible(false);
-        }
-        else
-        {
-            nextButton.setVisible(true);
-        }
-
-        questionId = index;
-        Question question = QuestionBank.getInstance().get(questionId);
-
-        questionTextArea.setText(question.getQuestionTxt());
-
-        String[] answers = question.getAnswers();
-        for (int i = 0; i < answerRadioButtons.length; i++) {
-            answerRadioButtons[i].setText(answers[i]);
-        }
-    }
-
-    private void loadQuestionListView() {
-        QuestionBank questionBank = QuestionBank.getInstance();
-        for (int i = 0; i < questionBank.size(); i++) {
-            questionListView.getItems().add(questionBank.get(i).getId() + "");
-        }
-    }
-
     @FXML private void handleStartAction() {
         startButton.setDisable(true);
         loadQuestion(0);
@@ -159,11 +113,63 @@ public class ExamPageController extends Controller{
         }
     }
 
-    @FXML private void handlePreviousAction() { loadQuestion(questionId - 1); }
+    @FXML private void handlePreviousAction() {
+        resetAnswerRadioButtons();
+        loadQuestion(questionId - 1);
+    }
 
     @FXML private void handleNextAction() {
+        resetAnswerRadioButtons();
         loadQuestion(questionId + 1);
     }
+
+    private void prepareQuestionListView() {
+        questionListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                loadQuestion(questionListView.getSelectionModel().getSelectedIndex());
+            }
+        });
+        questionListView.setDisable(true);
+    }
+
+    private void loadQuestion(int index) {
+        if (index == 0)
+        {
+            previousButton.setVisible(false);
+        }
+        else
+        {
+            previousButton.setVisible(true);
+        }
+        if (index == Meta.getInstance().getQuestionCount() - 1)
+        {
+            nextButton.setVisible(false);
+        }
+        else
+        {
+            nextButton.setVisible(true);
+        }
+
+        questionId = index;
+        Question question = QuestionBank.getInstance().get(questionId);
+
+        questionTextArea.setText(question.getQuestionTxt());
+
+        String[] answers = question.getAnswers();
+        for (int i = 0; i < answerRadioButtons.length; i++) {
+            answerRadioButtons[i].setText(answers[i]);
+        }
+    }
+
+    private void loadQuestionListView() {
+        QuestionBank questionBank = QuestionBank.getInstance();
+        for (int i = 0; i < questionBank.size(); i++) {
+            questionListView.getItems().add(questionBank.get(i).getId() + "");
+        }
+    }
+
+
 
 
     private void prepareAnswersVBox() {
@@ -200,5 +206,12 @@ public class ExamPageController extends Controller{
         previousButton.setDisable(!flag);
         nextButton.setDisable(!flag);
         questionListView.setDisable(!flag);
+    }
+
+    private void resetAnswerRadioButtons() {
+        for (int i = 0; i < answerRadioButtons.length; i++) {
+            answerRadioButtons[i].setSelected(false);
+
+        }
     }
 }

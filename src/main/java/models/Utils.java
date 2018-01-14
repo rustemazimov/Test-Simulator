@@ -11,7 +11,7 @@ public class Utils {
 		alert.showAndWait();
 	}
 
-	public static class PasswordStrenghtChecker {
+	public static class PasswordStrengthChecker {
 		private static String homePassword;
 		public static boolean isPasswordStrong(String password) {
 			if (password.length() < 10)

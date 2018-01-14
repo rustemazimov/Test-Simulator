@@ -116,7 +116,7 @@ public class HomePageController extends Controller{
                         "Username and Password must be specified in order to ...");
             return;
         }
-        if (!Utils.PasswordStrenghtChecker.isPasswordStrong(password))
+        if (!Utils.PasswordStrengthChecker.isPasswordStrong(password))
         {
             Utils.showAlertDialog(
                     "Information",
