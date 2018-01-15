@@ -36,6 +36,8 @@ public class HomePageController extends Controller{
 
     @FXML private PasswordField passwordField;
 
+    @FXML private PasswordField confirmPasswordField;
+
     @FXML private void initialize() {
         ObservableList<Integer> numList = FXCollections.observableArrayList();
         for (int i = 1; i < 125; i++) {
@@ -105,15 +107,26 @@ public class HomePageController extends Controller{
         }
         String
                 username = usernameTextField.getText(),
-                password = passwordField.getText();
+                password = passwordField.getText(),
+                confirmPassword = confirmPasswordField.getText();
         boolean
-                isUsernameEmpty = username.isEmpty();
-        if (isUsernameEmpty || password.isEmpty())
+                isUsernameEmpty = username.isEmpty(),
+                isConfirmPasswordEmpty = confirmPassword.isEmpty();
+        if (isUsernameEmpty || password.isEmpty() || isConfirmPasswordEmpty)
         {
             Utils.showAlertDialog(
                     "Information",
-                    String.format("%s mustn't be empty", isUsernameEmpty ? "Username" : "Password"),
+                    String.format("[%s] mustn't be empty", isUsernameEmpty ? "Username" : (!isConfirmPasswordEmpty ? "Password" : "Confirm password")),
                         "Username and Password must be specified in order to ...");
+            return;
+        }
+        if (!password.equals(confirmPassword))
+        {
+            Utils.showAlertDialog(
+                    "Information",
+                    "[Password] and [Confirm password] doesn't equal",
+                    "[Confirm password box] was added in order to make sure that you have entered the password that you wanted to define"
+            );
             return;
         }
         if (!Utils.PasswordStrengthChecker.isPasswordStrong(password))

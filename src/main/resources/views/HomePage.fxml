@@ -83,18 +83,30 @@
                         <Spinner fx:id="variantCountSpinner" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="49.0" prefWidth="403.0">
+                  <HBox alignment="CENTER" prefHeight="79.0" prefWidth="403.0">
                      <children>
                         <TextField fx:id="usernameTextField" alignment="CENTER" promptText="Username">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <PasswordField fx:id="passwordField" alignment="CENTER" onKeyPressed="#handleKeyPressedAction" promptText="Password">
+                        <VBox alignment="CENTER">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
-                        </PasswordField>
+                           <children>
+                              <PasswordField fx:id="passwordField" alignment="CENTER" onKeyPressed="#handleKeyPressedAction" promptText="Password">
+                                 <VBox.margin>
+                                    <Insets bottom="2.0" />
+                                 </VBox.margin>
+                              </PasswordField>
+                              <PasswordField fx:id="confirmPasswordField" alignment="CENTER" promptText="Confirm password">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                              </PasswordField>
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="46.0" prefWidth="403.0">

@@ -90,11 +90,15 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <PasswordField fx:id="passwordField" alignment="CENTER" onKeyPressed="#handleKeyPressedAction" promptText="Password">
+                        <VBox alignment="CENTER">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
-                        </PasswordField>
+                           <children>
+                              <PasswordField fx:id="passwordField" alignment="CENTER" onKeyPressed="#handleKeyPressedAction" promptText="Password" />
+                              <PasswordField fx:id="confirmPasswordField" alignment="CENTER" promptText="Confirm password" />
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="46.0" prefWidth="403.0">

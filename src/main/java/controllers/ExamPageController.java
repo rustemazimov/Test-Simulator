@@ -107,8 +107,9 @@ public class ExamPageController extends Controller{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("views/LoginPage.fxml"));
             AnchorPane pane = (AnchorPane) loader.load();
-            Controller controller = loader.getController();
+            LoginPageController controller = loader.getController();
             controller.setStage(getStage());
+            controller.setOwnStage(loginStage);
             Scene scene = new Scene(pane);
             loginStage.setScene(scene);
             loginStage.show();
