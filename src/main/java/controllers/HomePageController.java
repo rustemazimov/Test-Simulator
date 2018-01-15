@@ -78,7 +78,7 @@ public class HomePageController extends Controller{
 
     @FXML private void handleStartExamAction() {
 
-        SecureRandom random = new SecureRandom();
+        /*SecureRandom random = new SecureRandom();
         String[] methodTypes = new String[] {
                 "MD5",
                 "SHA1",
@@ -91,11 +91,11 @@ public class HomePageController extends Controller{
         String[] hashMethods = new String[random.nextInt(1_000_000_000) % 10];
         for (int i = 0; i < hashMethods.length; i++) {
             hashMethods[i] = methodTypes[random.nextInt(1_000_000_000) % methodTypes.length];
-        }
+        }*/
 
         Meta metaData = Meta.getInstance();
 
-        metaData.setHashMethods(hashMethods);
+//        metaData.setHashMethods(hashMethods);
         String fileName = this.filePathLabel.getText();
         if (fileName.isEmpty())
         {

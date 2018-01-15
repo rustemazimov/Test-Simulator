@@ -2,6 +2,7 @@ package models;
 
 import javafx.stage.Stage;
 
+import java.security.SecureRandom;
 import java.util.HashMap;
 
 public class Meta {
@@ -123,12 +124,29 @@ public class Meta {
     }
 
     public String[] getHashMethods() {
-        return hashMethods;
+        if (this.hashMethods == null)
+        {
+            SecureRandom random = new SecureRandom();
+            String[] methodTypes = new String[] {
+                    "MD5",
+                    "SHA1",
+                    "SHA256",
+                    "SHA512",
+                    "BCRYPT",
+                    "PBKDF2"
+            };
+
+            this.hashMethods = new String[random.nextInt(1_000_000_000) % 10];
+            for (int i = 0; i < this.hashMethods.length; i++) {
+                this.hashMethods[i] = methodTypes[random.nextInt(1_000_000_000) % methodTypes.length];
+            }
+        }
+        return this.hashMethods;
     }
 
-    public void setHashMethods(String[] hashMethods) {
+    /*public void setHashMethods(String[] hashMethods) {
         this.hashMethods = hashMethods;
-    }
+    }*/
 
     public void incrementAnswerCount(boolean isRight) {
         if (isRight)
