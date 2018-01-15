@@ -14,6 +14,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import models.AnswerBank;
 import models.Meta;
@@ -99,15 +101,17 @@ public class ExamPageController extends Controller{
         }
 
         try {
+            Stage loginStage = new Stage();
+            loginStage.initModality(Modality.APPLICATION_MODAL);
+            loginStage.initOwner(getStage());
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("views/LoginPage.fxml"));
             AnchorPane pane = (AnchorPane) loader.load();
             Controller controller = loader.getController();
             controller.setStage(getStage());
             Scene scene = new Scene(pane);
-            getStage().setWidth(pane.getPrefWidth());
-            getStage().setHeight(pane.getPrefHeight());
-            getStage().setScene(scene);
+            loginStage.setScene(scene);
+            loginStage.show();
         } catch (IOException e) {
 
         }
