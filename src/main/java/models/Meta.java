@@ -36,8 +36,6 @@ public class Meta {
     }
 
     public byte getIndexForVariant(char c) {
-        System.out.println("Variant count: " + variantCount);
-        System.out.println("Variant letters: " + variantLetters[0]);
         if (answerIndexMap == null)
         {
             answerIndexMap = new HashMap<>(variantCount);
