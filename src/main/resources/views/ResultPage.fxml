@@ -24,11 +24,13 @@
                     <MenuItem mnemonicParsing="false" text="Close" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
+                  <Menu fx:id="exportMenu" mnemonicParsing="false" text="Export">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="PDF" />
+                        <MenuItem mnemonicParsing="false" text="Word" />
+                        <MenuItem mnemonicParsing="false" text="Excel" />
+                        <MenuItem mnemonicParsing="false" text="Txt" />
+                     </items></Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
                     <MenuItem mnemonicParsing="false" text="About" />

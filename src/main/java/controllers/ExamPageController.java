@@ -17,10 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import models.AnswerBank;
-import models.Meta;
-import models.Question;
-import models.QuestionBank;
+import models.*;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -110,6 +107,7 @@ public class ExamPageController extends Controller{
             Stage loginStage = new Stage();
             loginStage.initModality(Modality.APPLICATION_MODAL);
             loginStage.initOwner(getStage());
+            loginStage.setTitle("Sign in");
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("views/LoginPage.fxml"));
             AnchorPane pane = (AnchorPane) loader.load();
@@ -188,7 +186,8 @@ public class ExamPageController extends Controller{
     private void loadQuestionListView() {
         QuestionBank questionBank = QuestionBank.getInstance();
         for (int i = 0; i < questionBank.size(); i++) {
-            questionListView.getItems().add("Question - " + questionBank.get(i).getId());
+            questionListView.getItems().add("Question - " + questionBank.get(i).getId() + ""
+                        + (isForOnlyLookThrough ? ExamResult.getInstance().get(i) : '\u0000' ));
         }
     }
 

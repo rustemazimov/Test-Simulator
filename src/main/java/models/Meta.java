@@ -18,6 +18,7 @@ public class Meta {
     private int unansweredAnswerCount = questionCount;
     private char[] variantLetters;
     private String[] hashMethods;
+    private String exportFileName;
 
     private HashMap<Character, Byte> answerIndexMap;
 
@@ -159,6 +160,14 @@ public class Meta {
 
     public void decrementUnansweredCount() {
         unansweredAnswerCount--;
+    }
+
+    public String getExportFileName() {
+        return exportFileName;
+    }
+
+    public void setExportFileName(String exportFileName) {
+        this.exportFileName = exportFileName;
     }
 }
 
