@@ -45,7 +45,7 @@ import javax.crypto.spec.PBEKeySpec;
                 case "SHA256": return convertToSHA256(text);
                 case "SHA512": return convertToSHA512(text);
                 case "BCRYPT": return convertToBCRYPT(text);
-                case "PBKDF2": return convertToPBKDF2(text);
+                //case "PBKDF2": return convertToPBKDF2(text);
                 default: return "You need support\nContact with us";
             }
         }
@@ -55,7 +55,13 @@ import javax.crypto.spec.PBEKeySpec;
         private String convertToMD5(String text){
             try {
                 MessageDigest md = MessageDigest.getInstance("MD5");
-                byte[] messageDigest = md.digest(text.getBytes());
+                byte[] messageDigest = new byte[0];
+                try {
+                    messageDigest = md.digest(text.getBytes("UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                md.reset();
                 BigInteger number = new BigInteger(1, messageDigest);
                 String hashedText = number.toString(16);
                 while(hashedText.length() < 32){
@@ -76,8 +82,8 @@ import javax.crypto.spec.PBEKeySpec;
             try
             {
                 MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+                crypt.digest(text.getBytes("UTF-8"));
                 crypt.reset();
-                crypt.update(text.getBytes("UTF-8"));
                 hashedText = convertByteToHex(crypt.digest());//Convert from byte to HexaDecimal then Initialize to ^hashedText^
             }
             catch(NoSuchAlgorithmException | UnsupportedEncodingException e)
@@ -91,6 +97,7 @@ import javax.crypto.spec.PBEKeySpec;
             try{
                 MessageDigest digest = MessageDigest.getInstance("SHA-256");
                 byte[] hash = digest.digest(base.getBytes("UTF-8"));
+                digest.reset();
                 StringBuilder hexString = new StringBuilder();
 
                 for (int i = 0; i < hash.length; i++) {
@@ -110,8 +117,12 @@ import javax.crypto.spec.PBEKeySpec;
         {
             try {
                 final MessageDigest sha512 = MessageDigest.getInstance("SHA-512");
-                sha512.update(textToHash.getBytes());
-
+                try {
+                    sha512.digest(textToHash.getBytes("UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                sha512.reset();
                 return convertByteToHex(sha512.digest());
             } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(Function.class.getName()).log(Level.SEVERE, null, ex);
@@ -125,7 +136,7 @@ import javax.crypto.spec.PBEKeySpec;
             return(hashed_password);
         }
 
-        private final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
+        /*private final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
         // The following constants may be changed without breaking existing hashes.
         private final int SALT_BYTES = 24;
         private final int HASH_BYTES = 24;
@@ -135,23 +146,22 @@ import javax.crypto.spec.PBEKeySpec;
         private final int SALT_INDEX = 1;
         private final int PBKDF2_INDEX = 2;
 
-        /**
+        *//**
          * Returns a salted PBKDF2 hash of the password.
          *
          * @param   password    the password to hash
          * @return              a salted PBKDF2 hash of the password
-         */
+         *//*
         private String convertToPBKDF2(String password)
         {
             return convertToPBKDF2(password.toCharArray());
         }
 
-        /**
+        *//**
          * Returns a salted PBKDF2 hash of the password.
          *
-         * @param   password    the password to hash
          * @return              a salted PBKDF2 hash of the password
-         */
+         *//*
         private String convertToPBKDF2(char[] password)
 
         {
@@ -176,7 +186,7 @@ import javax.crypto.spec.PBEKeySpec;
             PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, bytes * 8);
             SecretKeyFactory skf = SecretKeyFactory.getInstance(PBKDF2_ALGORITHM);
             return skf.generateSecret(spec).getEncoded();
-        }
+        }*/
         private  String convertByteToHex(byte data[])
         {
             StringBuilder hexData = new StringBuilder();

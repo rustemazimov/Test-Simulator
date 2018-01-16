@@ -20,11 +20,6 @@ public class LoginPageController extends Controller{
 
     @FXML private void handleEvaluateAction() {
         Meta metaData = Meta.getInstance();
-        System.out.printf("Username: %s\n", usernameTextField.getText());
-        System.out.printf("Password: %s\n", passwordTextField.getText());
-        System.out.printf("Encrypted password: %s\n", models.encryption.Function.getInstance().hash(passwordTextField.getText()));
-        System.out.printf("Saved Username: %s\n", metaData.getUsername());
-        System.out.printf("Saved password: %s\n", metaData.getPassword());
         if (
                 metaData.getUsername().equals(usernameTextField.getText())
                         &&

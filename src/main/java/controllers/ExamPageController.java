@@ -31,6 +31,7 @@ public class ExamPageController extends Controller{
 
     private RadioButton[] answerRadioButtons;
 
+    private boolean isForOnlyLookThrough;
     @FXML private VBox answersVBox;
 
     @FXML private ListView<String> questionListView;
@@ -56,6 +57,11 @@ public class ExamPageController extends Controller{
         evaluateButton.setDisable(true);
         previousButton.setDisable(true);
         nextButton.setDisable(true);
+        if (isForOnlyLookThrough)
+        {
+            startButton.setDisable(true);
+
+        }
     }
 
     @FXML private void handleStartAction() {
@@ -249,5 +255,9 @@ public class ExamPageController extends Controller{
             answerRadioButtons[i].setSelected(false);
 
         }
+    }
+
+    public void setForOnlyLookThrough(boolean forOnlyLookThrough) {
+        isForOnlyLookThrough = forOnlyLookThrough;
     }
 }

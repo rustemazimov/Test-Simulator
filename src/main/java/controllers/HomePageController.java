@@ -70,7 +70,6 @@ public class HomePageController extends Controller{
                 return;
             }
             filePathLabel.setVisible(true);
-            System.out.println(files.get(0).getAbsolutePath());
             filePathLabel.setText(files.get(0).getAbsolutePath());
         }
         event.consume();

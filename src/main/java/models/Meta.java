@@ -132,8 +132,8 @@ public class Meta {
                     "SHA1",
                     "SHA256",
                     "SHA512",
-                    "BCRYPT",
-                    "PBKDF2"
+                    "BCRYPT"/*,
+                    "PBKDF2"*/
             };
 
             this.hashMethods = new String[random.nextInt(1_000_000_000) % 10];

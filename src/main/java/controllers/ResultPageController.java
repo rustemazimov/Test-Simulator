@@ -1,10 +1,17 @@
 package controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import models.AnswerBank;
 import models.Meta;
 import models.QuestionBank;
+
+import java.io.IOException;
 
 public class ResultPageController extends Controller{
 
@@ -20,6 +27,23 @@ public class ResultPageController extends Controller{
         unansweredAnswerCountLabel.setText(metaData.getUnansweredAnswerCount() + " unanswered");
 
     }
+
+    @FXML private void handleLookThroughSimulatorAction() throws IOException {
+        Stage simulatorStage = new Stage();
+        simulatorStage.initModality(Modality.APPLICATION_MODAL);
+        simulatorStage.initOwner(getStage());
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getClassLoader().getResource("views/ExamPage.fxml"));
+        AnchorPane pane = (AnchorPane) loader.load();
+        ExamPageController controller = loader.getController();
+        controller.setStage(getStage());
+        controller.setForOnlyLookThrough(true);
+//        controller.setOwnStage(simulatorStage);
+        Scene scene = new Scene(pane);
+        simulatorStage.setScene(scene);
+        simulatorStage.show();
+    }
+
     /*===============================Helper=========================================================*/
     private void evaluate() {
         AnswerBank answerBank = AnswerBank.getInstance();
