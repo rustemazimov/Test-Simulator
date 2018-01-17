@@ -12,10 +12,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.*;
+import models.export.ResultExporter;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class ResultPageController extends Controller{
 

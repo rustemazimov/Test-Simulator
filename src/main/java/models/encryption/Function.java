@@ -44,8 +44,6 @@ import javax.crypto.spec.PBEKeySpec;
                 case "SHA1": return convertToSHA1(text);
                 case "SHA256": return convertToSHA256(text);
                 case "SHA512": return convertToSHA512(text);
-//                case "BCRYPT": return convertToBCRYPT(text);
-                //case "PBKDF2": return convertToPBKDF2(text);
                 default: return "You need support\nContact with us";
             }
         }
@@ -129,64 +127,6 @@ import javax.crypto.spec.PBEKeySpec;
             }
             return "You need support\nContact with us";
         }
-        private String convertToBCRYPT(String password_plaintext) {
-            String salt = BCrypt.gensalt(12);
-            String hashed_password = BCrypt.hashpw(password_plaintext, salt);
-
-            return(hashed_password);
-        }
-
-        /*private final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
-        // The following constants may be changed without breaking existing hashes.
-        private final int SALT_BYTES = 24;
-        private final int HASH_BYTES = 24;
-        private final int PBKDF2_ITERATIONS = 1000;
-
-        private final int ITERATION_INDEX = 0;
-        private final int SALT_INDEX = 1;
-        private final int PBKDF2_INDEX = 2;
-
-        *//**
-         * Returns a salted PBKDF2 hash of the password.
-         *
-         * @param   password    the password to hash
-         * @return              a salted PBKDF2 hash of the password
-         *//*
-        private String convertToPBKDF2(String password)
-        {
-            return convertToPBKDF2(password.toCharArray());
-        }
-
-        *//**
-         * Returns a salted PBKDF2 hash of the password.
-         *
-         * @return              a salted PBKDF2 hash of the password
-         *//*
-        private String convertToPBKDF2(char[] password)
-
-        {
-            try {
-                // Generate a random salt
-                SecureRandom random = new SecureRandom();
-                byte[] salt = new byte[SALT_BYTES];
-                random.nextBytes(salt);
-
-                // Hash the password
-                byte[] hash = pbkdf2(password, salt, PBKDF2_ITERATIONS, HASH_BYTES);
-                // format iterations:salt:hash
-                return PBKDF2_ITERATIONS + ":" + convertByteToHex(salt) + ":" +  convertByteToHex(hash);
-            } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-                //If the jvp is here  Your program is already broken :)))
-            }
-            return "You need support\nContact with us";
-        }
-        private byte[] pbkdf2(char[] password, byte[] salt, int iterations, int bytes)
-                throws NoSuchAlgorithmException, InvalidKeySpecException
-        {
-            PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, bytes * 8);
-            SecretKeyFactory skf = SecretKeyFactory.getInstance(PBKDF2_ALGORITHM);
-            return skf.generateSecret(spec).getEncoded();
-        }*/
         private  String convertByteToHex(byte data[])
         {
             StringBuilder hexData = new StringBuilder();
