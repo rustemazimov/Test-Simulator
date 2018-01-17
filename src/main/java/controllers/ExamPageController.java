@@ -268,7 +268,9 @@ public class ExamPageController extends Controller{
             }
             else
             {
-                answerRadioButton.setDisable(true);
+                answerRadioButton.setOnAction(event -> {
+                    answerRadioButton.setSelected(!answerRadioButton.isSelected());
+                });
             }
         }
 
@@ -292,7 +294,7 @@ public class ExamPageController extends Controller{
     }
 
     public void setForOnlyLookThrough(boolean forOnlyLookThrough) {
-//        startButton.setDisable(true);
         isForOnlyLookThrough = forOnlyLookThrough;
+        startButton.setText(startButton.getText() + " review");
     }
 }
