@@ -110,23 +110,21 @@ public class ResultPageController extends Controller{
             {
                 continue;
             }
-            else
-            {
-                metaData.decrementUnansweredCount();
+//                metaData.decrementUnansweredCount();
                 boolean isRight;
                 ExamResult examResult = ExamResult.getInstance();
                 if (userVariant == realVariant)
                 {
                     isRight = true;
-                    examResult.put(i, '+');
+                    examResult.put(i, '\u2705');
                 }
                 else
                 {
                     isRight = false;
-                    examResult.put(i, '-');
+                    examResult.put(i, '\u2716');
                 }
                 metaData.incrementAnswerCount(isRight);
-            }
+
         }
     }
 }

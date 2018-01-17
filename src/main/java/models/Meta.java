@@ -15,7 +15,7 @@ public class Meta {
     private String fileName;
     private int rightAnswerCount;
     private int wrongAnswerCount;
-    private int unansweredAnswerCount = questionCount;
+    private int unansweredAnswerCount;
     private char[] variantLetters;
     private String[] hashMethods;
     private String exportFileName;
@@ -52,6 +52,7 @@ public class Meta {
 
     public void setQuestionCount(int questionCount) {
         this.questionCount = questionCount;
+        this.unansweredAnswerCount = this.questionCount;
     }
 
     public int getVariantCount() {
@@ -130,8 +131,8 @@ public class Meta {
                     "MD5",
                     "SHA1",
                     "SHA256",
-                    "SHA512",
-                    "BCRYPT"/*,
+                    "SHA512"/*,
+                    "BCRYPT"*//*,
                     "PBKDF2"*/
             };
 
@@ -158,10 +159,9 @@ public class Meta {
         }
     }
 
-    public void decrementUnansweredCount() {
-        unansweredAnswerCount--;
-    }
+    public void decrementUnansweredCount() { unansweredAnswerCount--; }
 
+    public void incrementUnansweredCount() { unansweredAnswerCount++; }
     public String getExportFileName() {
         return exportFileName;
     }

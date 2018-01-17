@@ -44,7 +44,7 @@ import javax.crypto.spec.PBEKeySpec;
                 case "SHA1": return convertToSHA1(text);
                 case "SHA256": return convertToSHA256(text);
                 case "SHA512": return convertToSHA512(text);
-                case "BCRYPT": return convertToBCRYPT(text);
+//                case "BCRYPT": return convertToBCRYPT(text);
                 //case "PBKDF2": return convertToPBKDF2(text);
                 default: return "You need support\nContact with us";
             }

@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -45,31 +46,33 @@ public class ExamPageController extends Controller{
 
     @FXML private Button evaluateButton;
 
+    private boolean isTheFirstTime = true;
 
     @FXML private void initialize() {
-        prepareQuestionListView();
-        loadQuestionListView();
-        prepareAnswersVBox();
         pauseContinueButton.setDisable(true);
         evaluateButton.setDisable(true);
         previousButton.setDisable(true);
         nextButton.setDisable(true);
-        if (isForOnlyLookThrough)
-        {
-            startButton.setDisable(true);
-
-        }
     }
 
     @FXML private void handleStartAction() {
-        startButton.setDisable(true);
+        prepareQuestionListView();
+        loadQuestionListView();
+        prepareAnswersVBox();
+
         loadQuestion(0);
-        pauseContinueButton.setDisable(false);
+
         questionListView.setDisable(false);
         answersVBox.setDisable(false);
         previousButton.setDisable(false);
         nextButton.setDisable(false);
-        evaluateButton.setDisable(false);
+
+        if (!isForOnlyLookThrough)
+        {
+            pauseContinueButton.setDisable(false);
+            evaluateButton.setDisable(false);
+        }
+        startButton.setDisable(true);
     }
 
     @FXML private void handlePauseContinueAction() {
@@ -96,7 +99,6 @@ public class ExamPageController extends Controller{
                     + (unansweredAnswerCount > 1  ? "s were" : "was")
                     + "found!");
             alertDialog.setContentText("Do you want to continue?");
-            alertDialog.show();
             Optional<ButtonType> result = alertDialog.showAndWait();
             if (result.get() != ButtonType.OK){
                 return;
@@ -123,12 +125,10 @@ public class ExamPageController extends Controller{
     }
 
     @FXML private void handlePreviousAction() {
-        resetAnswerRadioButtons();
         loadQuestion(questionId - 1);
     }
 
     @FXML private void handleNextAction() {
-        resetAnswerRadioButtons();
         loadQuestion(questionId + 1);
     }
 
@@ -141,7 +141,6 @@ public class ExamPageController extends Controller{
                 {
                     return;
                 }
-                resetAnswerRadioButtons();
                 loadQuestion(selectedIndex);
             }
         });
@@ -149,6 +148,7 @@ public class ExamPageController extends Controller{
     }
 
     private void loadQuestion(int index) {
+        resetAnswerRadioButtons();
         if (index == 0)
         {
             previousButton.setVisible(false);
@@ -175,7 +175,30 @@ public class ExamPageController extends Controller{
                 .get(questionId, true);
         if (userAnswerForQuestion != '\u0000')
         {
-            answerRadioButtons[Meta.getInstance().getIndexForVariant(userAnswerForQuestion)].setSelected(true);
+            int
+                    indexOfUserAnswer = Meta.getInstance().getIndexForVariant(userAnswerForQuestion),
+                    indexOfRealAnswer = Meta.getInstance().getIndexForVariant(AnswerBank.getInstance().get(questionId, false));
+            answerRadioButtons[indexOfUserAnswer].setSelected(true);
+            if (isForOnlyLookThrough)
+            {
+                if (indexOfUserAnswer == indexOfRealAnswer)
+                {
+                    RadioButton userAnswerRadioButton = answerRadioButtons[indexOfUserAnswer];
+                    userAnswerRadioButton.setStyle("-fx-background-color: Green;");
+                    userAnswerRadioButton.setTooltip(new Tooltip("Correct answer"));
+                }
+                else
+                {
+                    RadioButton
+                            userAnswerRadioButton = answerRadioButtons[indexOfUserAnswer],
+                            realAnswerRadioButton = answerRadioButtons[indexOfRealAnswer];
+                    userAnswerRadioButton.setStyle("-fx-background-color: Red;");
+                    userAnswerRadioButton.setTooltip(new Tooltip("Your answer"));
+
+                    realAnswerRadioButton.setStyle("-fx-background-color: Blue");
+                    realAnswerRadioButton.setTooltip(new Tooltip("Correct answer"));
+                }
+            }
         }
         String[] answers = question.getAnswers();
         for (int i = 0; i < answerRadioButtons.length; i++) {
@@ -186,8 +209,8 @@ public class ExamPageController extends Controller{
     private void loadQuestionListView() {
         QuestionBank questionBank = QuestionBank.getInstance();
         for (int i = 0; i < questionBank.size(); i++) {
-            questionListView.getItems().add("Question - " + questionBank.get(i).getId() + ""
-                        + (isForOnlyLookThrough ? ExamResult.getInstance().get(i) : '\u0000' ));
+            questionListView.getItems().add("Question - " + (questionBank.get(i).getId() + 1) + " "
+                        + (isForOnlyLookThrough ? ExamResult.getInstance().get(i) : '\u25CE' ));
         }
     }
 
@@ -205,37 +228,48 @@ public class ExamPageController extends Controller{
             answers.add(answerRadioButton);
             RadioButton finalAnswerRadioButton = answerRadioButton;
             int finalI = i;
-            answerRadioButton.setOnAction(event -> {
-                ObservableList<String> questionListViewItems = questionListView.getItems();
-                String olderQuestionItem = questionListViewItems.get(questionId);
-                boolean isLastCharPlusOfQuestionOnListView = olderQuestionItem.charAt(olderQuestionItem.length() - 1) == '\u2705';
-                if (finalAnswerRadioButton.isSelected())
-                {
-                    if (!isLastCharPlusOfQuestionOnListView)
+            if (!isForOnlyLookThrough)
+            {
+                answerRadioButton.setOnAction(event -> {
+                    ObservableList<String> questionListViewItems = questionListView.getItems();
+                    String olderQuestionItem = questionListViewItems.get(questionId);
+                    final char ANSWERED_SIGN = '\u25C9';
+                    boolean isLastCharPlusOfQuestionOnListView = olderQuestionItem.charAt(olderQuestionItem.length() - 1) == ANSWERED_SIGN;
+                    if (finalAnswerRadioButton.isSelected())
                     {
-                        questionListViewItems.set(questionId, questionListViewItems.get(questionId) + " " + '\u2705');
-                    }
-                    for (int j = 0; j < answerRadioButtons.length; j++) {
-                        if (finalI != j)
+                        if (!isLastCharPlusOfQuestionOnListView)
                         {
-                            answerRadioButtons[j].setSelected(false);
+                            String questionTitleOnQuestionListView = questionListViewItems.get(questionId);
+                            questionListViewItems.set(questionId, questionTitleOnQuestionListView.substring(0, questionTitleOnQuestionListView.length() - 2) + " " + ANSWERED_SIGN);
+                        }
+                        for (int j = 0; j < answerRadioButtons.length; j++) {
+                            if (finalI != j)
+                            {
+                                answerRadioButtons[j].setSelected(false);
+                            }
+                        }
+                        String radioButtonText = finalAnswerRadioButton.getText();
+                        if (radioButtonText.length() >= 1)
+                        {
+                            AnswerBank.getInstance().set(questionId, radioButtonText.charAt(0), true);
+                            Meta.getInstance().decrementUnansweredCount();
                         }
                     }
-                    String radioButtonText = finalAnswerRadioButton.getText();
-                    if (radioButtonText.length() >= 1)
+                    else
                     {
-                        AnswerBank.getInstance().set(questionId, radioButtonText.charAt(0), true);
+                        AnswerBank.getInstance().remove(questionId);
+                        Meta.getInstance().incrementUnansweredCount();
+                        if (isLastCharPlusOfQuestionOnListView)
+                        {
+                            questionListViewItems.set(questionId, olderQuestionItem.substring(0, olderQuestionItem.indexOf(ANSWERED_SIGN) - 1) + " " + '\u25CE');
+                        }
                     }
-                }
-                else
-                {
-                    AnswerBank.getInstance().remove(questionId);
-                    if (isLastCharPlusOfQuestionOnListView)
-                    {
-                        questionListViewItems.set(questionId, olderQuestionItem.substring(0, olderQuestionItem.indexOf('\u2705') - 1));
-                    }
-                }
-            });
+                });
+            }
+            else
+            {
+                answerRadioButton.setDisable(true);
+            }
         }
 
 
@@ -251,12 +285,14 @@ public class ExamPageController extends Controller{
 
     private void resetAnswerRadioButtons() {
         for (int i = 0; i < answerRadioButtons.length; i++) {
-            answerRadioButtons[i].setSelected(false);
-
+            RadioButton answerRadioButton = answerRadioButtons[i];
+            answerRadioButton.setSelected(false);
+            answerRadioButton.setStyle("");
         }
     }
 
     public void setForOnlyLookThrough(boolean forOnlyLookThrough) {
+//        startButton.setDisable(true);
         isForOnlyLookThrough = forOnlyLookThrough;
     }
 }
